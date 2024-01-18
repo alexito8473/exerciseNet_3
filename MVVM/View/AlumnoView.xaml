@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UD4T3.MVVM.View.AlumnoView"
+             xmlns:local="clr-namespace:UD4T3.MVVM.ViewModel"
+             Title="AlumnoView"
+             BackgroundColor="White">
+    <ScrollView>
+        <VerticalStackLayout Margin="10" >
+            <Entry Placeholder="Nombre"  TextColor="Black" Text="{Binding AlumnoActual.Nombre}"/>   <!-- Aqui vamos a introducir el dato del Nombre -->
+            <Entry Placeholder="Nif"     TextColor="Black" Text="{Binding AlumnoActual.Nif}"/>      <!-- Aqui vamos a introducir el dato del Nif -->
+            <Entry Placeholder="Empresa" TextColor="Black" Text="{Binding AlumnoActual.Empresa}"/>  <!-- Aqui vamos a introducir el dato de la empresa -->
+            <Button WidthRequest="200"   Text="Add or Update" Command="{Binding CrearOActualizarAlumno}" BackgroundColor="#502bd5" TextColor="White"/> <!-- Aqui tenemos el boton donde podemos añadir o actualizar un alumno -->
+            <CollectionView Grid.Row="1" ItemsSource="{Binding Alumnos}" SelectionMode="Single" SelectedItem="{Binding AlumnoActual}"> <!-- Creamos una colección de datos -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*,*,*,*" >
+                            <Label  Text="{Binding Nombre}" TextColor="Black" Margin="0,0,0,20"/>               <!-- Del alumno que este en la colección se mostrara el nombre -->
+                            <Label  Grid.Column="1" Text="{Binding Nif}" TextColor="Black" Margin="0,0,0,20"/>  <!-- y también se mostrara su Nif -->
+                            <Button Grid.Column="2" Text="Borrar" HeightRequest="45" WidthRequest="100" 
+                                Margin="0,0,0,20"
+                                BackgroundColor="#502bd5"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:AlumnoViewModel}},Path=BorrarAlumno}"
+                                CommandParameter="{Binding ID}"
+                                TextColor="White"
+                                />                                                                                <!-- Con este botón borramos al Alumno de la colección -->
+                            <Button Grid.Column="3" Text="Detalle" HeightRequest="45" WidthRequest="100" 
+                                Margin="0,0,0,20"
+                                BackgroundColor="#502bd5"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:AlumnoViewModel}},Path=DetalleAlumno}"
+                                CommandParameter="{Binding ID}"
+                                TextColor="White"
+                                Clicked="Detalle_Clicked"
+                                />                                                                                 <!-- Con este botón creamos una página para poder mostrar todos sus datos -->
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

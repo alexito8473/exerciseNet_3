@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UD4T3.MVVM.View.DetalleView"
+             Title="DetalleView"
+             BackgroundColor="White">
+    <VerticalStackLayout >
+        <HorizontalStackLayout Margin="10">
+            <Label Text="Nombre: " TextColor="Black"/> 
+            <Label  Text="{Binding Nombre}" TextColor="Black"/>     <!-- Aqui vamos a mostramos el dato del Nombre, usando binding -->
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Margin="10">
+            <Label Text="Nif: " TextColor="Black"/>
+            <Label  Text="{Binding Nif}" TextColor="Black"/>        <!-- Aqui vamos a mostramos el dato del Nif, usando binding -->
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Margin="10">
+            <Label Text="Empresa: " TextColor="Black"/>
+            <Label  Text="{Binding Empresa}" TextColor="Black"/>    <!-- Aqui vamos a mostramos el dato del Empresa, usando binding -->
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>
