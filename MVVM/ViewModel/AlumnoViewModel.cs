@@ -76,9 +76,14 @@ namespace UD4T3.MVVM.ViewModel {
         /// </remarks>
         private void ConstruirComandoBorrar() {
             BorrarAlumno = new Command(() => {
-                App.AlumnoRepository.Delete(AlumnoActual.ID);   // Llamamos al método para poder conectarnos a la base de datos y borrar un alumno
-                Mensaje(Constantes.TITULO_COMANDO, App.AlumnoRepository.StatusMessages);
-                AlumnoActual = new Alumno();     // Cuando ya ha sido actualizado o añadido el alumno, los datos del anterior Alumno actual ya no hace falta.
+                if (AlumnoActual!=null) {
+                    App.AlumnoRepository.Delete(AlumnoActual.ID);   // Llamamos al método para poder conectarnos a la base de datos y borrar un alumno
+                    Mensaje(Constantes.TITULO_COMANDO, App.AlumnoRepository.StatusMessages);
+
+                } else {
+                    Mensaje(Constantes.TITULO_COMANDO, String.Format(Constantes.ERROR_BORRAR_ALUMNO_LISTA_FORMAT, Constantes.ADVERTENCIA_BORRAR_ALUMNO));
+                }
+                AlumnoActual = new Alumno();   // Cuando ya ha sido actualizado o añadido el alumno, los datos del anterior Alumno actual ya no hace falta.
                 Refresh();                       // Recargamos los valores de la página para poder ver la lista de alumnos, sino lo hiciéramos no se nos actualizaría a tiempo real.         
             });
         }
@@ -87,10 +92,19 @@ namespace UD4T3.MVVM.ViewModel {
         /// Con el método creamos un comando para instanciar el usuarioActual,
         /// </remarks>
         private void ConstruirComandoDetalle() {
-            DetalleAlumno = new Command(() => {
-                AlumnoActual = App.AlumnoRepository.Get(AlumnoActual.ID);
-                Refresh();          // Refrescamos la pagina.
-            }); 
+            if (AlumnoActual!=null) {
+                DetalleAlumno = new Command(() => {
+                    if (AlumnoActual != null) {
+                        AlumnoActual = App.AlumnoRepository.Get(AlumnoActual.ID);
+                    } else {
+                        AlumnoActual = null;    // Tengo que hacer esto para evitar que falle el sistema al darle 2 veces al botn de detalle
+                    } 
+                    Refresh();          // Refrescamos la pagina.
+                });
+            } else {
+                AlumnoActual = new Alumno();
+            }
+            
         }
 
         /// <summary> Método actualizar lista de los alumnos</summary>

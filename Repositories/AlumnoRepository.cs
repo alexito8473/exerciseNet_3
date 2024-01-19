@@ -37,7 +37,7 @@ namespace UD4T3.Repositories {
         /// <remarks> El método añade o actualiza los datos de un alumno, y nos indica cuantas filas han sido cambiadas/añadidas.</remarks>
         /// <param name="alumno">El alumno que va ha ser modificado o actualizado</param>
         public void AñadirOActualizar(Alumno alumno) {
-            if (alumno.ID != null) {
+            if (alumno != null) {
                 try {
                     if (alumno.Nif != null && alumno.Empresa!=null && alumno.Nif != "" && alumno.Empresa != "") { // Compruebo primero si es nulo, porque si voy a introducir un nuevo alumno,y compruebo si es un string vacío por si al actualizarlo lo he borrado
                         if (alumno.Nif.Length<=9) {
@@ -82,10 +82,12 @@ namespace UD4T3.Repositories {
         public Alumno Get(int id) {
             Alumno alumno = null;
             try {
+              
                 alumno = connection.Table<Alumno>().FirstOrDefault(t => t.ID == id); // Buscamos por el id introducido por el argumento
                 StatusMessages = Constantes.TEXT_OBTENER_DATO_ALUMNO_LISTA;
             } catch (Exception ex) {
                 StatusMessages = string.Format(Constantes.ERROR_OBTENER_DATO_ALUMNO_LISTA_FORMAT, ex.Message);
+                alumno= new Alumno();
             }
             return alumno;
         }
